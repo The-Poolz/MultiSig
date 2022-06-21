@@ -34,14 +34,6 @@ contract MultySigModifiers is MultiSigEvents{
         _;
     }
 
-    modifier NoInitiation() {
-        require(
-            Amount == 0 && TargetAddress == address(0),
-            "Must not be initiated"
-        );
-        _;
-    }
-
     modifier ValuesCheck(address target, uint256 amount) {
         require(
             TargetAddress == target && Amount == amount,
