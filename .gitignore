@@ -102,3 +102,11 @@ dist
 
 # TernJS port file
 .tern-port
+
+# npm
+package-lock.json
+# testing
+coverage
+coverage.json
+# production
+build
