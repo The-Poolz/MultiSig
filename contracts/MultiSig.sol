@@ -37,7 +37,7 @@ contract MultiSig is MultySigModifiers {
         TargetAddress = target;
     }
 
-    function ConformMint(uint256 amount, address target)
+    function ConfirmMint(uint256 amount, address target)
         public
         OnlyConfirmer
         ValuesCheck(target, amount)
@@ -55,7 +55,7 @@ contract MultiSig is MultySigModifiers {
         TargetAddress = target;
     }
 
-    function ConformTransferOwnership(address target)
+    function ConfirmTransferOwnership(address target)
         public
         OnlyConfirmer
         ValuesCheck(target, 0)
