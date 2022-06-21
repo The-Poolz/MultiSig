@@ -1,4 +1,4 @@
-const MultySig = artifacts.require("MultySig")
+const MultiSig = artifacts.require("MultiSig")
 const { assert } = require('chai')
 const truffleAssert = require('truffle-assertions')
 

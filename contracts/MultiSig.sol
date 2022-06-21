@@ -3,8 +3,8 @@ pragma solidity ^0.8.0;
 
 import "./TokenInterface.sol";
 
-contract MultySig {
-    address TokenAddress; //will change only in constractor
+contract MultiSig {
+    address TokenAddress; //will change only in constructor
     address InitiatorAddress; //can self change
     address ConfirmerAddress; //can self change
     uint256 Amount; //hold temp data for transaction
@@ -65,7 +65,7 @@ contract MultySig {
         TargetAddress = target;
     }
 
-    function ConformMint(uint256 amount, address target) public OnlyConfirmer {
+    function ConfirmMint(uint256 amount, address target) public OnlyConfirmer {
         require(
             Amount == amount && TargetAddress == target,
             "Must use the same values from initiation"
@@ -84,7 +84,7 @@ contract MultySig {
         TargetAddress = target;
     }
 
-    function ConformTransferOwnership(address target) public OnlyConfirmer {
+    function ConfirmTransferOwnership(address target) public OnlyConfirmer {
         require(
             TargetAddress == target && Amount == 0,
             "Must use the same values from initiation"
