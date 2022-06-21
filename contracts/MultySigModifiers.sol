@@ -39,4 +39,12 @@ contract MultySigModifiers {
         );
         _;
     }
+
+    modifier ValuesCheck(address target, uint256 amount) {
+        require(
+            TargetAddress == target && Amount == amount,
+            "Must use the same values from initiation"
+        );
+        _;
+    }
 }

@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "./TokenInterface.sol";
 import "./MultySigModifiers.sol";
 
-contract MultiSig is MultySigModifiers{
+contract MultiSig is MultySigModifiers {
     constructor(
         address Initiator,
         address Confirmer,
@@ -35,11 +35,11 @@ contract MultiSig is MultySigModifiers{
         TargetAddress = target;
     }
 
-    function ConformMint(uint256 amount, address target) public OnlyConfirmer {
-        require(
-            Amount == amount && TargetAddress == target,
-            "Must use the same values from initiation"
-        );
+    function ConformMint(uint256 amount, address target)
+        public
+        OnlyConfirmer
+        ValuesCheck(target, amount)
+    {
         IERC20(TokenAddress).mint(target, amount);
         ClearConfirmation();
     }
@@ -53,11 +53,11 @@ contract MultiSig is MultySigModifiers{
         TargetAddress = target;
     }
 
-    function ConformTransferOwnership(address target) public OnlyConfirmer {
-        require(
-            TargetAddress == target && Amount == 0,
-            "Must use the same values from initiation"
-        );
+    function ConformTransferOwnership(address target)
+        public
+        OnlyConfirmer
+        ValuesCheck(target, 0)
+    {
         IERC20(TokenAddress).addMiner(target);
         IERC20(TokenAddress).renounceMinter();
         ClearConfirmation();
