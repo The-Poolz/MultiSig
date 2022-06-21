@@ -3,13 +3,12 @@ pragma solidity ^0.8.0;
 
 import "./TokenInterface.sol";
 
-contract MultySig {
-    address TokenAddress; //will change only in constractor
-    address InitiatorAddress; //can self change
-    address ConfirmerAddress; //can self change
-    uint256 Amount; //hold temp data for transaction
-    address TargetAddress;  //hold temp data for transaction
-
+contract MultiSig {
+    address public TokenAddress; //will change only in constractor
+    address public InitiatorAddress; //can self change
+    address public ConfirmerAddress; //can self change
+    uint256 public Amount; //hold temp data for transaction
+    address public TargetAddress;  //hold temp data for transaction
 
     constructor(
         address Initiator,
@@ -25,6 +24,14 @@ contract MultySig {
         require(
             msg.sender == InitiatorAddress,
             "only the InitiationAddress can change it"
+        );
+        _;
+    }
+
+    modifier OnlyConfirmerOrInitiator() {
+        require(
+            msg.sender == InitiatorAddress || msg.sender == ConfirmerAddress,
+            "only the InitiationAddress or ConfirmerAddress can change it"
         );
         _;
     }
@@ -71,8 +78,7 @@ contract MultySig {
             "Must use the same values from initiation"
         );
         IERC20(TokenAddress).mint(target, amount);
-        Amount = 0;
-        TargetAddress = address(0);
+        ClearConfirmation();
     }
 
     function InitiateTransferOwnership(address target)
@@ -91,6 +97,11 @@ contract MultySig {
         );
         IERC20(TokenAddress).addMiner(target);
         IERC20(TokenAddress).renounceMinter();
+        ClearConfirmation();
+    }
+
+    function ClearConfirmation() public OnlyConfirmerOrInitiator {
+        Amount = 0;
         TargetAddress = address(0);
     }
 }
