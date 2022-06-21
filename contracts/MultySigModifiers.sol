@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract MultySigModifiers {
+import "./MultiSigEvents.sol";
+
+contract MultySigModifiers is MultiSigEvents{
     address public TokenAddress; //will change only in constractor
     address public InitiatorAddress; //can self change
     address public ConfirmerAddress; //can self change

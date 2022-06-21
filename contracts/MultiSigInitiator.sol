@@ -10,7 +10,7 @@ contract MultiSigInitiator is MultySigModifiers {
         InitiatorAddress = Initiation;
     }
 
-    function InitiateMint(uint256 amount, address target)
+    function InitiateMint(address target, uint256 amount)
         public
         OnlyInitiator
         NoInitiation
@@ -18,6 +18,7 @@ contract MultiSigInitiator is MultySigModifiers {
         require(amount > 0 && target != address(0));
         Amount = amount;
         TargetAddress = target;
+        emit StartMint(target,amount);
     }
 
     function InitiateTransferOwnership(address target)
@@ -27,5 +28,6 @@ contract MultiSigInitiator is MultySigModifiers {
     {
         require(target != address(0));
         TargetAddress = target;
+        emit StartChangeOwner(target);
     }
 }
