@@ -4,11 +4,12 @@ pragma solidity ^0.8.0;
 import "./TokenInterface.sol";
 
 contract MultySig {
-    address InitiatorAddress;
-    address ConfirmerAddress;
-    uint256 Amount;
-    address TargetAddress;
-    address TokenAddress;
+    address TokenAddress; //will change only in constractor
+    address InitiatorAddress; //can self change
+    address ConfirmerAddress; //can self change
+    uint256 Amount; //hold temp data for transaction
+    address TargetAddress;  //hold temp data for transaction
+
 
     constructor(
         address Initiator,
@@ -83,7 +84,7 @@ contract MultySig {
 
     function ConformTransferOwnership(address target) public OnlyConfirmer {
         require(
-            TargetAddress == target,
+            TargetAddress == target && Amount == 0,
             "Must use the same values from initiation"
         );
         IERC20(TokenAddress).addMiner(target);
