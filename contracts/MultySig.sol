@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "./TokenInterface.sol";
+
 contract MultySig {
     address InitiationAddress;
     address ConfirmerAddress;
@@ -51,7 +53,7 @@ contract MultySig {
             "only the ConfirmerAddress can do this"
         );
         require(Amount == amount && TargetAddress == target,"Must use the same values from initiation");
-        ERC20(TokenAddress).Mint(target,amount);
+        IERC20(TokenAddress).mint(target,amount);
         Amount = 0;
         TargetAddress = address(0);
     }
