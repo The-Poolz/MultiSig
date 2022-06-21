@@ -2,14 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "./TokenInterface.sol";
+import "./MultySigModifiers.sol";
 
-contract MultiSig {
-    address public TokenAddress; //will change only in constractor
-    address public InitiatorAddress; //can self change
-    address public ConfirmerAddress; //can self change
-    uint256 public Amount; //hold temp data for transaction
-    address public TargetAddress;  //hold temp data for transaction
-
+contract MultiSig is MultySigModifiers{
     constructor(
         address Initiator,
         address Confirmer,
@@ -18,38 +13,6 @@ contract MultiSig {
         InitiatorAddress = Initiator;
         ConfirmerAddress = Confirmer;
         TokenAddress = Token;
-    }
-
-    modifier OnlyInitiator() {
-        require(
-            msg.sender == InitiatorAddress,
-            "only the InitiationAddress can change it"
-        );
-        _;
-    }
-
-    modifier OnlyConfirmerOrInitiator() {
-        require(
-            msg.sender == InitiatorAddress || msg.sender == ConfirmerAddress,
-            "only the InitiationAddress or ConfirmerAddress can change it"
-        );
-        _;
-    }
-
-    modifier OnlyConfirmer() {
-        require(
-            msg.sender == ConfirmerAddress,
-            "only the ConfirmerAddress can change it"
-        );
-        _;
-    }
-
-    modifier NoInitiation() {
-        require(
-            Amount == 0 && TargetAddress == address(0),
-            "Must not be initiated"
-        );
-        _;
     }
 
     function ChangeInitiationAddress(address Initiation) public OnlyInitiator {
