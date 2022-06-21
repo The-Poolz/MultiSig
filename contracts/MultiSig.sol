@@ -72,7 +72,7 @@ contract MultiSig {
         TargetAddress = target;
     }
 
-    function ConfirmMint(uint256 amount, address target) public OnlyConfirmer {
+    function ConformMint(uint256 amount, address target) public OnlyConfirmer {
         require(
             Amount == amount && TargetAddress == target,
             "Must use the same values from initiation"
@@ -90,7 +90,7 @@ contract MultiSig {
         TargetAddress = target;
     }
 
-    function ConfirmTransferOwnership(address target) public OnlyConfirmer {
+    function ConformTransferOwnership(address target) public OnlyConfirmer {
         require(
             TargetAddress == target && Amount == 0,
             "Must use the same values from initiation"
