@@ -1,26 +1,96 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "./TokenInterface.sol";
+
 contract MultySig {
-    address InitiationAddress;
-    address ConfirmerAddress;
+    address TokenAddress; //will change only in constractor
+    address InitiatorAddress; //can self change
+    address ConfirmerAddress; //can self change
+    uint256 Amount; //hold temp data for transaction
+    address TargetAddress;  //hold temp data for transaction
 
-    constructor(address Initiation, address Confirmer) {
-        InitiationAddress = Initiation;
+
+    constructor(
+        address Initiator,
+        address Confirmer,
+        address Token
+    ) {
+        InitiatorAddress = Initiator;
+        ConfirmerAddress = Confirmer;
+        TokenAddress = Token;
+    }
+
+    modifier OnlyInitiator() {
+        require(
+            msg.sender == InitiatorAddress,
+            "only the InitiationAddress can change it"
+        );
+        _;
+    }
+
+    modifier OnlyConfirmer() {
+        require(
+            msg.sender == ConfirmerAddress,
+            "only the ConfirmerAddress can change it"
+        );
+        _;
+    }
+
+    modifier NoInitiation() {
+        require(
+            Amount == 0 && TargetAddress == address(0),
+            "Must not be initiated"
+        );
+        _;
+    }
+
+    function ChangeInitiationAddress(address Initiation) public OnlyInitiator {
+        require(Initiation != ConfirmerAddress, "can't have same address");
+        InitiatorAddress = Initiation;
+    }
+
+    function ChangeConfirmerAddress(address Confirmer) public OnlyConfirmer {
+        require(Confirmer != InitiatorAddress, "can't have same address");
         ConfirmerAddress = Confirmer;
     }
 
-    function ChangeInitiationAddress(address Initiation) public
+    function InitiateMint(uint256 amount, address target)
+        public
+        OnlyInitiator
+        NoInitiation
     {
-        require(Initiation != ConfirmerAddress); //can't have same address
-        require(msg.sender == InitiationAddress); //only the InitiationAddress can cahnbge it
-        InitiationAddress = Initiation;
+        require(amount > 0 && target != address(0));
+        Amount = amount;
+        TargetAddress = target;
     }
 
-    function ChangeConfirmerAddress(address Confirmer) public
+    function ConformMint(uint256 amount, address target) public OnlyConfirmer {
+        require(
+            Amount == amount && TargetAddress == target,
+            "Must use the same values from initiation"
+        );
+        IERC20(TokenAddress).mint(target, amount);
+        Amount = 0;
+        TargetAddress = address(0);
+    }
+
+    function InitiateTransferOwnership(address target)
+        public
+        OnlyInitiator
+        NoInitiation
     {
-        require(Confirmer != InitiationAddress); //can't have same address
-        require(msg.sender == ConfirmerAddress); //only the InitiationAddress can cahnbge it
-        ConfirmerAddress = Confirmer;
+        require(target != address(0));
+        TargetAddress = target;
+    }
+
+    function ConformTransferOwnership(address target) public OnlyConfirmer {
+        require(
+            TargetAddress == target && Amount == 0,
+            "Must use the same values from initiation"
+        );
+        IERC20(TokenAddress).addMiner(target);
+        IERC20(TokenAddress).renounceMinter();
+        TargetAddress = address(0);
     }
 }
