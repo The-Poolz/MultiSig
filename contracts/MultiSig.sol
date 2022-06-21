@@ -5,7 +5,6 @@ import "./TokenInterface.sol";
 import "./MultySigModifiers.sol";
 
 contract MultiSig is MultySigModifiers {
-
     constructor(
         address Initiator,
         address Confirmer,
