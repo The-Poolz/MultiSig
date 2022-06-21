@@ -7,6 +7,7 @@ contract MultiSigInitiator is MultySigModifiers {
     function ChangeInitiationAddress(address Initiation) public OnlyInitiator {
         require(Initiation != ConfirmerAddress, "can't have same address");
         require(Initiation != address(0));
+        emit InitiatorChanged(Initiation,InitiatorAddress);
         InitiatorAddress = Initiation;
     }
 
