@@ -8,7 +8,7 @@ contract MultiSig {
     address public InitiatorAddress; //can self change
     address public ConfirmerAddress; //can self change
     uint256 public Amount; //hold temp data for transaction
-    address public TargetAddress;  //hold temp data for transaction
+    address public TargetAddress; //hold temp data for transaction
 
     constructor(
         address Initiator,
@@ -54,11 +54,13 @@ contract MultiSig {
 
     function ChangeInitiationAddress(address Initiation) public OnlyInitiator {
         require(Initiation != ConfirmerAddress, "can't have same address");
+        require(Initiation != address(0));
         InitiatorAddress = Initiation;
     }
 
     function ChangeConfirmerAddress(address Confirmer) public OnlyConfirmer {
         require(Confirmer != InitiatorAddress, "can't have same address");
+        require(Confirmer != address(0));
         ConfirmerAddress = Confirmer;
     }
 
