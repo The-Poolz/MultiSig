@@ -53,24 +53,24 @@ contract("MultiSig", accounts => {
             await truffleAssert.reverts(
                 multiSig.InitiateTransferOwnership(accounts[1], { from: invalidAddr }), 'only the InitiationAddress can change it')
             await truffleAssert.reverts(
-                multiSig.ConformTransferOwnership(accounts[1], { from: invalidAddr }), 'only the ConfirmerAddress can change it')
+                multiSig.ConfirmTransferOwnership(accounts[1], { from: invalidAddr }), 'only the ConfirmerAddress can change it')
             await truffleAssert.reverts(
-                multiSig.ConformMint('1000', accounts[1], { from: invalidAddr }), 'only the ConfirmerAddress can change it')
+                multiSig.ConfirmMint(accounts[1], '1000', { from: invalidAddr }), 'only the ConfirmerAddress can change it')
             await truffleAssert.reverts(
-                multiSig.InitiateMint('1000', accounts[1], { from: invalidAddr }), 'only the InitiationAddress can change it')
+                multiSig.InitiateMint(accounts[1], '1000',  { from: invalidAddr }), 'only the InitiationAddress can change it')
             await truffleAssert.reverts(
                 multiSig.ClearConfirmation({ from: invalidAddr }), 'only the InitiationAddress or ConfirmerAddress can change it')
         })
 
         it('should revert with the same values', async () => {
-            await multiSig.InitiateMint('1000', accounts[1], { from: initiatorAddress })
+            await multiSig.InitiateMint(accounts[1], '1000',  { from: initiatorAddress })
             await truffleAssert.reverts(
-                multiSig.ConformMint('999', accounts[1], { from: confirmerAddress }), 'Must use the same values from initiation')
+                multiSig.ConfirmMint(accounts[1], '999', { from: confirmerAddress }), 'Must use the same values from initiation')
             await truffleAssert.reverts(
-                multiSig.ConformMint('1000', accounts[2], { from: confirmerAddress }), 'Must use the same values from initiation')
-            await multiSig.ConformMint('1000', accounts[1], { from: confirmerAddress })
+                multiSig.ConfirmMint(accounts[2], '1000', { from: confirmerAddress }), 'Must use the same values from initiation')
+            await multiSig.ConfirmMint(accounts[1], '1000', { from: confirmerAddress })
             await truffleAssert.reverts(
-                multiSig.ConformTransferOwnership(confirmerAddress, { from: confirmerAddress }), 'Must use the same values from initiation')
+                multiSig.ConfirmTransferOwnership(confirmerAddress, { from: confirmerAddress }), 'Must use the same values from initiation')
         })
     })
 })

@@ -85,7 +85,6 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-<<<<<<< HEAD
       version: "pragma",      // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
@@ -95,20 +94,6 @@ module.exports = {
       //  },
       //  evmVersion: "byzantium"
       // }
-=======
-      version: "pragma",
-      settings: {
-        evmVersion: "istanbul",
-        optimizer: {
-          enabled: true, runs: 9999999,
-          details: {
-            yul: true,
-          }
-        },
-      },
-      docker: false,
-      parser: "solcjs",
->>>>>>> master
     }
   },
   plugins: ["solidity-coverage"],
