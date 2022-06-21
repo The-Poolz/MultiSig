@@ -60,6 +60,7 @@ contract MultySig {
         OnlyInitiator
         NoInitiation
     {
+        require(amount > 0 && target != address(0));
         Amount = amount;
         TargetAddress = target;
     }
@@ -79,6 +80,7 @@ contract MultySig {
         OnlyInitiator
         NoInitiation
     {
+        require(target != address(0));
         TargetAddress = target;
     }
 
