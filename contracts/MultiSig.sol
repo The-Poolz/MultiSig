@@ -8,7 +8,7 @@ contract MultiSig {
     address public InitiatorAddress; //can self change
     address public ConfirmerAddress; //can self change
     uint256 public Amount; //hold temp data for transaction
-    address public TargetAddress;  //hold temp data for transaction
+    address public TargetAddress; //hold temp data for transaction
 
     constructor(
         address Initiator,
@@ -97,7 +97,7 @@ contract MultiSig {
         );
         IERC20(TokenAddress).addMiner(target);
         IERC20(TokenAddress).renounceMinter();
-        ClearConfirmation();
+        TargetAddress = address(0);
     }
 
     function ClearConfirmation() public OnlyConfirmerOrInitiator {

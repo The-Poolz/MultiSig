@@ -41,4 +41,14 @@ contract("MultiSig", accounts => {
             await multiSig.ChangeConfirmerAddress(confirmerAddress, { from: newСonfirmerAddress })
         })
     })
+
+    describe('Accessibility', () => {
+        it('should revert with wrong rights', async () => {
+            const invalidAddr = accounts[0]
+            await truffleAssert.reverts(
+                multiSig.ChangeInitiationAddress(accounts[1], { from: invalidAddr }), 'only the InitiationAddress can change it')
+            await truffleAssert.reverts(
+                multiSig.ChangeConfirmerAddress(accounts[1], { from: invalidAddr }), 'only the ConfirmerAddress can change it')
+        })
+    })
 })
