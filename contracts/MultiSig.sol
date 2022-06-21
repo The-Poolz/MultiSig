@@ -17,11 +17,13 @@ contract MultiSig is MultySigModifiers {
 
     function ChangeInitiationAddress(address Initiation) public OnlyInitiator {
         require(Initiation != ConfirmerAddress, "can't have same address");
+        require(Initiation != address(0));
         InitiatorAddress = Initiation;
     }
 
     function ChangeConfirmerAddress(address Confirmer) public OnlyConfirmer {
         require(Confirmer != InitiatorAddress, "can't have same address");
+        require(Confirmer != address(0));
         ConfirmerAddress = Confirmer;
     }
 
