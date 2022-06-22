@@ -16,6 +16,7 @@ contract MultiSigInitiator is MultySigModifiers {
         emit StartMint(target, amount);
     }
 
+    /// @notice initiate a change of ownership of minting tokens
     function InitiateTransferOwnership(address target)
         public
         OnlyAuthorized
