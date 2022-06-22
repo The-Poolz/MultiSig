@@ -7,5 +7,6 @@ contract MultiSigEvents {
     event StartChangeOwner(address target);
     event CompliteChangeOwner(address target);
     event AuthorizedChanged(address newAuthorize, address OldAuthorize);
+    event NewSig(address Signer, uint256 CurrentSigns, uint256 NeededSigns);
     event Clear();
 }
