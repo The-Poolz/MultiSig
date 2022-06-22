@@ -5,13 +5,15 @@ import "./MultiSigConfirmer.sol";
 
 contract MultiSig is MultiSigConfirmer {
     constructor(
-        address Initiator,
-        address Confirmer,
+        address[] Authorized,
         address Token,
         uint256 MinSignersAmount
     ) {
-        InitiatorAddress = Initiator;
-        ConfirmerAddress = Confirmer;
+        require(Authorized.length >= MinSignersAmount);
+        require(TokenAddress != address(0));
+        for (uint256 index = 0; index < Authorized.length; index++) {
+            AuthorizedMap[Authorized[index]] = true;
+        }
         TokenAddress = Token;
         MinSigners = MinSignersAmount;
     }
