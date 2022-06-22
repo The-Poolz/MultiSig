@@ -3,34 +3,17 @@ pragma solidity ^0.8.0;
 
 import "./MultiSigEvents.sol";
 
-contract MultySigModifiers is MultiSigEvents{
+contract MultySigModifiers is MultiSigEvents {
     address public TokenAddress; //will change only in constractor
-    address public InitiatorAddress; //can self change
-    address public ConfirmerAddress; //can self change
+    mapping(address => bool) AuthorizedMap; //can self change
     uint256 public Amount; //hold temp data for transaction
     uint256 public MinSigners; //min signers amount to do action
     address public TargetAddress; //hold temp data for transaction
 
-    modifier OnlyInitiator() {
+    modifier OnlyAuthorized() {
         require(
-            msg.sender == InitiatorAddress,
-            "only the InitiationAddress can change it"
-        );
-        _;
-    }
-
-    modifier OnlyConfirmerOrInitiator() {
-        require(
-            msg.sender == InitiatorAddress || msg.sender == ConfirmerAddress,
-            "only the InitiationAddress or ConfirmerAddress can change it"
-        );
-        _;
-    }
-
-    modifier OnlyConfirmer() {
-        require(
-            msg.sender == ConfirmerAddress,
-            "only the ConfirmerAddress can change it"
+            AuthorizedMap(msg.sender),
+            "User is not Authorized"
         );
         _;
     }

@@ -5,12 +5,13 @@ import "./MultiSigInitiator.sol";
 import "./TokenInterface.sol";
 
 contract MultiSigConfirmer is MultiSigInitiator {
+    uint256 sigCounter;
+
     function ChangeConfirmerAddress(address Confirmer) public OnlyConfirmer {
         require(Confirmer != InitiatorAddress, "can't have same address");
         require(Confirmer != address(0));
-        emit ConfirmerChanged(Confirmer,ConfirmerAddress);
+        emit ConfirmerChanged(Confirmer, ConfirmerAddress);
         ConfirmerAddress = Confirmer;
-
     }
 
     function ConfirmMint(address target, uint256 amount)
@@ -18,10 +19,12 @@ contract MultiSigConfirmer is MultiSigInitiator {
         OnlyConfirmer
         ValuesCheck(target, amount)
     {
-        IERC20(TokenAddress).mint(target, amount);
-        emit CompliteMint(target, amount);
-        ClearConfirmation();
-        emit NewSig(msg.sender, target);
+        sigCounter++;
+        if (IsFinalSig()) {
+            IERC20(TokenAddress).mint(target, amount);
+            emit CompliteMint(target, amount);
+            ClearConfirmation();
+        }
     }
 
     function ConfirmTransferOwnership(address target)
@@ -29,16 +32,24 @@ contract MultiSigConfirmer is MultiSigInitiator {
         OnlyConfirmer
         ValuesCheck(target, 0)
     {
-        IERC20(TokenAddress).addMiner(target);
-        IERC20(TokenAddress).renounceMinter();      
-        emit CompliteChangeOwner(target);
-        ClearConfirmation();
+        sigCounter++;
+        if (IsFinalSig()) {
+            IERC20(TokenAddress).addMinter(target);
+            IERC20(TokenAddress).renounceMinter();
+            emit CompliteChangeOwner(target);
+            ClearConfirmation();
+        }
         emit NewSig(msg.sender, target);
+    }
+
+    function IsFinalSig() public view returns (bool) {
+        return sigCounter == MinSigners;
     }
 
     function ClearConfirmation() public OnlyConfirmerOrInitiator {
         Amount = 0;
         TargetAddress = address(0);
+        sigCounter = 0;
         emit Clear();
     }
 }
