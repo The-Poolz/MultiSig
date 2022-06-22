@@ -6,9 +6,12 @@ import "./MultiSigEvents.sol";
 contract MultySigModifiers is MultiSigEvents{
     address public TokenAddress; //will change only in constractor
     address public InitiatorAddress; //can self change
-    address public ConfirmerAddress; //can self change
+    address[] public ConfirmersAddresses; //can self change
     uint256 public Amount; //hold temp data for transaction
+    uint256 public MinSigners;
     address public TargetAddress; //hold temp data for transaction
+    mapping(address => bool) public IsSigned;
+    bool isSigner = false;
 
     modifier OnlyInitiator() {
         require(
@@ -19,18 +22,22 @@ contract MultySigModifiers is MultiSigEvents{
     }
 
     modifier OnlyConfirmerOrInitiator() {
+        CheckOnlyConfirmer();
         require(
-            msg.sender == InitiatorAddress || msg.sender == ConfirmerAddress,
+            msg.sender == InitiatorAddress || isSigner,
             "only the InitiationAddress or ConfirmerAddress can change it"
         );
+        isSigner = false;
         _;
     }
 
     modifier OnlyConfirmer() {
+        CheckOnlyConfirmer();
         require(
-            msg.sender == ConfirmerAddress,
+            isSigner,
             "only the ConfirmerAddress can change it"
         );
+        isSigner = false;
         _;
     }
 
@@ -40,5 +47,13 @@ contract MultySigModifiers is MultiSigEvents{
             "Must use the same values from initiation"
         );
         _;
+    }
+
+    function CheckOnlyConfirmer() private {
+        for (uint256 i = 0; i < ConfirmersAddresses.length; i++) {
+            if (ConfirmersAddresses[i] == msg.sender) {
+                isSigner = true;
+            }
+        }
     }
 }

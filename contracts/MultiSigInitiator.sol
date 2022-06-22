@@ -5,8 +5,10 @@ import "./MultySigModifiers.sol";
 
 contract MultiSigInitiator is MultySigModifiers {
     function ChangeInitiationAddress(address Initiation) public OnlyInitiator {
-        require(Initiation != ConfirmerAddress, "can't have same address");
-        require(Initiation != address(0));
+        for (uint256 i = 0; i < ConfirmersAddresses.length; i++) {
+            require(Initiation != ConfirmersAddresses[i], "Initiation address must be different from ConfirmersAddresses");
+        }
+        require(Initiation != address(0), "Initiation address must be not zero");
         emit InitiatorChanged(Initiation,InitiatorAddress);
         InitiatorAddress = Initiation;
     }

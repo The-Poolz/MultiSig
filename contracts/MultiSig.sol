@@ -8,10 +8,12 @@ contract MultiSig is MultiSigConfirmer {
     constructor(
         address Initiator,
         address Confirmer,
-        address Token
+        address Token,
+        uint256 MinSignersAmount
     ) {
         InitiatorAddress = Initiator;
         ConfirmerAddress = Confirmer;
         TokenAddress = Token;
+        MinSigners = MinSignersAmount;
     }
 }

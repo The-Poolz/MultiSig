@@ -5,12 +5,13 @@ import "./MultiSigInitiator.sol";
 import "./TokenInterface.sol";
 
 contract MultiSigConfirmer is MultiSigInitiator {
-    function ChangeConfirmerAddress(address Confirmer) public OnlyConfirmer {
-        require(Confirmer != InitiatorAddress, "can't have same address");
-        require(Confirmer != address(0));
-        emit ConfirmerChanged(Confirmer,ConfirmerAddress);
-        ConfirmerAddress = Confirmer;
-
+    function SetConfirmers (address[] calldata _confirmers) external OnlyConfirmer {
+        require(_confirmers.length > 0, "Confirmers length must be greater than 0");
+        for (uint256 i = 0; i < _confirmers.length; i++) {
+            require(_confirmers[i] != address(0), "Confirm address have to be not zero");
+        }
+        emit ConfirmersChanged(_confirmers, ConfirmersAddresses);
+        ConfirmersAddresses = _confirmers;
     }
 
     function ConfirmMint(address target, uint256 amount)
