@@ -5,6 +5,8 @@ import "./MultiSigInitiator.sol";
 import "./TokenInterface.sol";
 
 contract MultiSigConfirmer is MultiSigInitiator {
+    uint256 sigCounter;
+
     function ChangeConfirmerAddress(address Confirmer) public OnlyConfirmer {
         require(Confirmer != InitiatorAddress, "can't have same address");
         require(Confirmer != address(0));
@@ -17,9 +19,12 @@ contract MultiSigConfirmer is MultiSigInitiator {
         OnlyConfirmer
         ValuesCheck(target, amount)
     {
-        IERC20(TokenAddress).mint(target, amount);
-        emit CompliteMint(target, amount);
-        ClearConfirmation();
+        sigCounter++;
+        if (IsFinalSig()) {
+            IERC20(TokenAddress).mint(target, amount);
+            emit CompliteMint(target, amount);
+            ClearConfirmation();
+        }
     }
 
     function ConfirmTransferOwnership(address target)
@@ -27,15 +32,23 @@ contract MultiSigConfirmer is MultiSigInitiator {
         OnlyConfirmer
         ValuesCheck(target, 0)
     {
-        IERC20(TokenAddress).addMinter(target);
-        IERC20(TokenAddress).renounceMinter();      
-        emit CompliteChangeOwner(target);
-        ClearConfirmation();
+        sigCounter++;
+        if (IsFinalSig()) {
+            IERC20(TokenAddress).addMinter(target);
+            IERC20(TokenAddress).renounceMinter();
+            emit CompliteChangeOwner(target);
+            ClearConfirmation();
+        }
+    }
+
+    function IsFinalSig() public view returns (bool) {
+        return sigCounter == 4; //to do : change the 4 to the "minSig"
     }
 
     function ClearConfirmation() public OnlyConfirmerOrInitiator {
         Amount = 0;
         TargetAddress = address(0);
+        sigCounter = 0;
         emit Clear();
     }
 }
