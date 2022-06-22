@@ -7,11 +7,12 @@ import "./TokenInterface.sol";
 contract MultiSigConfirmer is MultiSigInitiator {
     uint256 sigCounter;
 
-    function ChangeConfirmerAddress(address Confirmer) public OnlyConfirmer {
-        require(Confirmer != InitiatorAddress, "can't have same address");
-        require(Confirmer != address(0));
-        emit ConfirmerChanged(Confirmer, ConfirmerAddress);
-        ConfirmerAddress = Confirmer;
+    function ChangeAuthorizedAddress(address authorize) public OnlyAuthorized {
+        require(!AuthorizedMap[authorize], "can't have same address");
+        require(authorize != address(0));
+        emit ConfirmerChanged(authorize, msg.sender);
+        AuthorizedMap[msg.sender] = false;
+        AuthorizedMap[authorize] = true;
     }
 
     function ConfirmMint(address target, uint256 amount)
