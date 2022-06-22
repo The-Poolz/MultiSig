@@ -20,6 +20,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         ValuesCheck(target, amount)
     {
         sigCounter++;
+        emit NewSig(msg.sender, target);
         if (IsFinalSig()) {
             IERC20(TokenAddress).mint(target, amount);
             emit CompliteMint(target, amount);
@@ -33,13 +34,13 @@ contract MultiSigConfirmer is MultiSigInitiator {
         ValuesCheck(target, 0)
     {
         sigCounter++;
+        emit NewSig(msg.sender, target);
         if (IsFinalSig()) {
             IERC20(TokenAddress).addMinter(target);
             IERC20(TokenAddress).renounceMinter();
             emit CompliteChangeOwner(target);
             ClearConfirmation();
         }
-        emit NewSig(msg.sender, target);
     }
 
     function IsFinalSig() public view returns (bool) {
