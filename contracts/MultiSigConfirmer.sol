@@ -46,7 +46,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         emit NewSig(msg.sender, sigCounter, MinSigners);
     }
 
-    function IsFinalSig() public view returns (bool) {
+    function IsFinalSig() internal view returns (bool) {
         return sigCounter == MinSigners;
     }
 
