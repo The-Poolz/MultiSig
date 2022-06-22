@@ -103,9 +103,13 @@ contract("MultiSig", accounts => {
 
         it('should confirm transfer ownership', async () => {
             const newTarget = accounts[5]
-            const target = await multiSig.TargetAddress()
+            await multiSig.ConfirmTransferOwnership(newTarget, { from: confirmerAddress })
             const tx = await multiSig.ConfirmTransferOwnership(newTarget, { from: confirmerAddress })
+            const target = tx.logs[tx.logs.length - 2].args.target
             assert.equal(target, newTarget)
+            await multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress })
+            await multiSig.ConfirmMint(mintAddr, amount, { from: confirmerAddress })
+            await truffleAssert.reverts(multiSig.ConfirmMint(mintAddr, amount, { from: confirmerAddress }), "MinterRole: caller does not have the Minter role")
         })
     })
 })
