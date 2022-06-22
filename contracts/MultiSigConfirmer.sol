@@ -8,9 +8,8 @@ contract MultiSigConfirmer is MultiSigInitiator {
     function ChangeConfirmerAddress(address Confirmer) public OnlyConfirmer {
         require(Confirmer != InitiatorAddress, "can't have same address");
         require(Confirmer != address(0));
-        emit ConfirmerChanged(Confirmer,ConfirmerAddress);
+        emit ConfirmerChanged(Confirmer, ConfirmerAddress);
         ConfirmerAddress = Confirmer;
-
     }
 
     function ConfirmMint(address target, uint256 amount)
@@ -28,7 +27,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         OnlyConfirmer
         ValuesCheck(target, 0)
     {
-        IERC20(TokenAddress).addMiner(target);
+        IERC20(TokenAddress).addMinter(target);
         IERC20(TokenAddress).renounceMinter();      
         emit CompliteChangeOwner(target);
         ClearConfirmation();
