@@ -14,6 +14,8 @@ contract MultiSigConfirmer is MultiSigInitiator {
         AuthorizedMap[authorize] = true;
     }
 
+    /// @notice collects votes to confirm mint tokens
+    /// if there are enough votes, coins will be minted  
     function ConfirmMint(address target, uint256 amount)
         public
         OnlyAuthorized
@@ -27,6 +29,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         }
     }
 
+    /// @notice transfers the right to mint tokens
     function ConfirmTransferOwnership(address target)
         public
         OnlyAuthorized
@@ -50,6 +53,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         return sigCounter == MinSigners;
     }
 
+    /// @notice cancel the minting request
     function ClearConfirmation() public OnlyAuthorized {
         Amount = 0;
         TargetAddress = address(0);
