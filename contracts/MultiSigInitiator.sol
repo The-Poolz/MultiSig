@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import "./MultySigModifiers.sol";
 
+/// @title contains all request initiations.
 contract MultiSigInitiator is MultySigModifiers {
     function InitiateMint(address target, uint256 amount)
         public

@@ -4,9 +4,8 @@ pragma solidity ^0.8.0;
 import "./MultiSigInitiator.sol";
 import "./TokenInterface.sol";
 
+/// @title contains confirmation requests.
 contract MultiSigConfirmer is MultiSigInitiator {
-    uint256 sigCounter;
-
     function ChangeAuthorizedAddress(address authorize) public OnlyAuthorized {
         require(!AuthorizedMap[authorize], "can't have same address");
         require(authorize != address(0));

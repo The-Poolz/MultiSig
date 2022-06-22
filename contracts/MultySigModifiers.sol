@@ -3,12 +3,14 @@ pragma solidity ^0.8.0;
 
 import "./MultiSigEvents.sol";
 
+/// @title contains all modifiers and stores variables.
 contract MultySigModifiers is MultiSigEvents {
     address public TokenAddress; //will change only in constractor
     mapping(address => bool) AuthorizedMap; //can self change
     uint256 public Amount; //hold temp data for transaction
     uint256 public MinSigners; //min signers amount to do action
     address public TargetAddress; //hold temp data for transaction
+    uint256 public sigCounter; // if sigCounter == MinSigners transaction can be implemented
 
     modifier OnlyAuthorized() {
         require(
