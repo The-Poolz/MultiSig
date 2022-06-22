@@ -10,8 +10,8 @@ contract MultiSigConfirmer is MultiSigInitiator {
 
     /// @notice only authorized address can change himself
     function ChangeAuthorizedAddress(address authorize) external OnlyAuthorized {
-        require(!AuthorizedMap[authorize], "can't have same address");
-        require(authorize != address(0));
+        require(!AuthorizedMap[authorize], "AuthorizedMap must have unique addresses");
+        require(authorize != address(0), "Authorize address must be non-zero");
         emit AuthorizedChanged(authorize, msg.sender);
         AuthorizedMap[msg.sender] = false;
         AuthorizedMap[authorize] = true;
