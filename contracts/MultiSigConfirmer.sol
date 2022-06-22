@@ -21,6 +21,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         IERC20(TokenAddress).mint(target, amount);
         emit CompliteMint(target, amount);
         ClearConfirmation();
+        emit NewSig(msg.sender, target);
     }
 
     function ConfirmTransferOwnership(address target)
@@ -32,6 +33,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         IERC20(TokenAddress).renounceMinter();      
         emit CompliteChangeOwner(target);
         ClearConfirmation();
+        emit NewSig(msg.sender, target);
     }
 
     function ClearConfirmation() public OnlyConfirmerOrInitiator {
