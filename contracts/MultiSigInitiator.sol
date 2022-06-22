@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "./MultiSigModifiers.sol";
 
 /// @title contains all request initiations.
-contract MultiSigInitiator is MultySigModifiers {
+contract MultiSigInitiator is MultiSigModifiers {
 
     /// @dev initiate a request to mint tokens
     function InitiateMint(address target, uint256 amount)
