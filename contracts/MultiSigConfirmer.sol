@@ -27,7 +27,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         _newSignature();
         if (IsFinalSig()) {
             IERC20(TokenAddress).mint(target, amount);
-            emit CompliteMint(target, amount);
+            emit CompleteMint(target, amount);
             ClearConfirmation();
         }
     }
@@ -42,7 +42,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         if (IsFinalSig()) {
             IERC20(TokenAddress).addMinter(target);
             IERC20(TokenAddress).renounceMinter();
-            emit CompliteChangeOwner(target);
+            emit CompleteChangeOwner(target);
             ClearConfirmation();
         }
     }
