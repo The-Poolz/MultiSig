@@ -5,8 +5,7 @@ import "./MultiSigEvents.sol";
 
 contract MultySigModifiers is MultiSigEvents {
     address public TokenAddress; //will change only in constractor
-    address public InitiatorAddress; //can self change
-    address public ConfirmerAddress; //can self change
+    mapping(uint256 => address) AuthorizedMap; //can self change
     uint256 public Amount; //hold temp data for transaction
     address public TargetAddress; //hold temp data for transaction
 
