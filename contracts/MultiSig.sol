@@ -7,7 +7,7 @@ import "./MultiSigConfirmer.sol";
 /// @title Smart contract of using multi signature for approval sending transactions.
 contract MultiSig is MultiSigConfirmer {
     constructor(
-        address[] Authorized, // who can votes and initiate mint transaction
+        address[] memory Authorized, // who can votes and initiate mint transaction
         address Token, // mintable token address
         uint256 MinSignersAmount // minimum amount of votes for a successful mint transaction 
     ) {
