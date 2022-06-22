@@ -8,7 +8,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
     uint256 sigCounter;
 
     function ChangeAuthorizedAddress(address authorize) public OnlyAuthorized {
-        require(AuthorizedMap[authorize], "can't have same address");
+        require(!AuthorizedMap[authorize], "can't have same address");
         require(authorize != address(0));
         emit ConfirmerChanged(authorize, msg.sender);
         AuthorizedMap[msg.sender] = false;
