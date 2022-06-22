@@ -6,6 +6,9 @@ import "./TokenInterface.sol";
 
 /// @title contains confirmation requests.
 contract MultiSigConfirmer is MultiSigInitiator {
+    uint256 public sigCounter; // if sigCounter == MinSigners transaction can be implemented
+
+    /// @notice only authorized address can change himself
     function ChangeAuthorizedAddress(address authorize) public OnlyAuthorized {
         require(!AuthorizedMap[authorize], "can't have same address");
         require(authorize != address(0));
