@@ -12,7 +12,7 @@ contract MultySigModifiers is MultiSigEvents {
 
     modifier OnlyAuthorized() {
         require(
-            AuthorizedMap(msg.sender),
+            AuthorizedMap[msg.sender],
             "User is not Authorized"
         );
         _;

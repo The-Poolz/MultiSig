@@ -5,7 +5,7 @@ import "./MultiSigConfirmer.sol";
 
 contract MultiSig is MultiSigConfirmer {
     constructor(
-        address[] Authorized,
+        address[] memory Authorized,
         address Token,
         uint256 MinSignersAmount
     ) {
