@@ -52,7 +52,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         emit NewSig(msg.sender, sigCounter, MinSigners);
     }
 
-    /// @return true if there are enough votes
+    /// @return true if there are enough votes to complete the transaction
     function IsFinalSig() internal view returns (bool) {
         return sigCounter == MinSigners;
     }
