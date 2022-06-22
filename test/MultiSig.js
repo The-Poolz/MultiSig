@@ -8,12 +8,8 @@ const MultiSig = artifacts.require("MultiSig")
 
 contract("MultiSig", accounts => {
     const initiatorAddress = accounts[1], confirmerAddress = accounts[2]
-<<<<<<< HEAD
     const invalidAddr = accounts[0], mintAddr = accounts[4]
     const amount = '10000'
-=======
-    const invalidAddr = accounts[0]
->>>>>>> master
     let token
     let multiSig
 
@@ -27,7 +23,6 @@ contract("MultiSig", accounts => {
         assert.equal(initiator, initiatorAddress)
         assert.equal(confirmer, confirmerAddress)
         await token.addMinter(multiSig.address)// multiSig added as minter
-<<<<<<< HEAD
         await token.renounceMinter()
     })
 
@@ -52,8 +47,6 @@ contract("MultiSig", accounts => {
         assert.equal(target, mintAddr)
         assert.equal(confirmAmount, amount)
         assert.equal(mintedSupply.toString(), BigNumber.sum(totalSupply, amount).toString(), 'invalid total balance')
-=======
->>>>>>> master
     })
 
     describe('Manageable', () => {
