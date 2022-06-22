@@ -6,10 +6,13 @@ import "./MultiSigConfirmer.sol";
 /// @author The-Poolz contract team
 /// @title Smart contract of using multi signature for approval sending transactions.
 contract MultiSig is MultiSigConfirmer {
+    /// @param Authorized who can votes and initiate mint transaction
+    /// @param Token mintable token address
+    /// @param MinSignersAmount minimum amount of votes for a successful mint transaction
     constructor(
-        address[] memory Authorized, // who can votes and initiate mint transaction
-        address Token, // mintable token address
-        uint256 MinSignersAmount // minimum amount of votes for a successful mint transaction 
+        address[] memory Authorized,
+        address Token,
+        uint256 MinSignersAmount
     ) {
         require(Authorized.length >= MinSignersAmount);
         require(Token != address(0));

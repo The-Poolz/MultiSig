@@ -8,7 +8,7 @@ import "./TokenInterface.sol";
 contract MultiSigConfirmer is MultiSigInitiator {
     uint256 public sigCounter; // if sigCounter == MinSigners transaction can be implemented
 
-    /// @notice only authorized address can change himself
+    /// @dev only authorized address can change himself
     function ChangeAuthorizedAddress(address authorize) external OnlyAuthorized {
         require(!AuthorizedMap[authorize], "can't have same address");
         require(authorize != address(0));
@@ -17,7 +17,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         AuthorizedMap[authorize] = true;
     }
 
-    /// @notice collects votes to confirm mint tokens
+    /// @dev collects votes to confirm mint tokens
     /// if there are enough votes, coins will be minted  
     function ConfirmMint(address target, uint256 amount)
         external
@@ -32,7 +32,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         }
     }
 
-    /// @notice transfers the right to mint tokens
+    /// @dev transfers the right to mint tokens
     function ConfirmTransferOwnership(address target)
         external
         OnlyAuthorized
@@ -52,11 +52,12 @@ contract MultiSigConfirmer is MultiSigInitiator {
         emit NewSig(msg.sender, sigCounter, MinSigners);
     }
 
+    /// @return true if there are enough votes
     function IsFinalSig() internal view returns (bool) {
         return sigCounter == MinSigners;
     }
 
-    /// @notice cancel the minting request
+    /// @dev cancel the minting request
     function ClearConfirmation() public OnlyAuthorized {
         Amount = 0;
         TargetAddress = address(0);
