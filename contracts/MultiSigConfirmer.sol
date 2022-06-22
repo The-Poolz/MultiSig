@@ -42,7 +42,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
     }
 
     function IsFinalSig() public view returns (bool) {
-        return sigCounter == 4; //to do : change the 4 to the "minSig"
+        return sigCounter == MinSigners;
     }
 
     function ClearConfirmation() public OnlyConfirmerOrInitiator {
