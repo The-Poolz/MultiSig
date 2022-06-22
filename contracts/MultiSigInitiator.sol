@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./MultySigModifiers.sol";
+import "./MultiSigModifiers.sol";
 
 /// @title contains all request initiations.
-contract MultiSigInitiator is MultySigModifiers {
+contract MultiSigInitiator is MultiSigModifiers {
     function InitiateMint(address target, uint256 amount)
         external
         OnlyAuthorized
