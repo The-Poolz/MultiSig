@@ -9,7 +9,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
     uint256 public sigCounter; // if sigCounter == MinSigners transaction can be implemented
 
     /// @notice only authorized address can change himself
-    function ChangeAuthorizedAddress(address authorize) public OnlyAuthorized {
+    function ChangeAuthorizedAddress(address authorize) external OnlyAuthorized {
         require(!AuthorizedMap[authorize], "can't have same address");
         require(authorize != address(0));
         emit AuthorizedChanged(authorize, msg.sender);
@@ -20,7 +20,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
     /// @notice collects votes to confirm mint tokens
     /// if there are enough votes, coins will be minted  
     function ConfirmMint(address target, uint256 amount)
-        public
+        external
         OnlyAuthorized
         ValuesCheck(target, amount)
     {
@@ -34,7 +34,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
 
     /// @notice transfers the right to mint tokens
     function ConfirmTransferOwnership(address target)
-        public
+        external
         OnlyAuthorized
         ValuesCheck(target, 0)
     {

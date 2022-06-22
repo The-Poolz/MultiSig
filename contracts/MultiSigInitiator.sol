@@ -6,7 +6,7 @@ import "./MultySigModifiers.sol";
 /// @title contains all request initiations.
 contract MultiSigInitiator is MultySigModifiers {
     function InitiateMint(address target, uint256 amount)
-        public
+        external
         OnlyAuthorized
         ValuesCheck(address(0), 0)
     {
@@ -18,7 +18,7 @@ contract MultiSigInitiator is MultySigModifiers {
 
     /// @notice initiate a change of ownership of minting tokens
     function InitiateTransferOwnership(address target)
-        public
+        external
         OnlyAuthorized
         ValuesCheck(address(0), 0)
     {
