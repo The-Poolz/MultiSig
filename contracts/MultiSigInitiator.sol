@@ -6,7 +6,7 @@ import "./MultySigModifiers.sol";
 contract MultiSigInitiator is MultySigModifiers {
     function InitiateMint(address target, uint256 amount)
         public
-        OnlyInitiator
+        OnlyAuthorized
         ValuesCheck(address(0), 0)
     {
         require(amount > 0 && target != address(0));
@@ -17,7 +17,7 @@ contract MultiSigInitiator is MultySigModifiers {
 
     function InitiateTransferOwnership(address target)
         public
-        OnlyInitiator
+        OnlyAuthorized
         ValuesCheck(address(0), 0)
     {
         require(target != address(0));

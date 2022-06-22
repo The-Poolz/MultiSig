@@ -10,14 +10,14 @@ contract MultiSigConfirmer is MultiSigInitiator {
     function ChangeAuthorizedAddress(address authorize) public OnlyAuthorized {
         require(!AuthorizedMap[authorize], "can't have same address");
         require(authorize != address(0));
-        emit ConfirmerChanged(authorize, msg.sender);
+        emit AuthorizedChanged(authorize, msg.sender);
         AuthorizedMap[msg.sender] = false;
         AuthorizedMap[authorize] = true;
     }
 
     function ConfirmMint(address target, uint256 amount)
         public
-        OnlyConfirmer
+        OnlyAuthorized
         ValuesCheck(target, amount)
     {
         sigCounter++;
@@ -31,7 +31,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
 
     function ConfirmTransferOwnership(address target)
         public
-        OnlyConfirmer
+        OnlyAuthorized
         ValuesCheck(target, 0)
     {
         sigCounter++;
@@ -48,7 +48,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
         return sigCounter == MinSigners;
     }
 
-    function ClearConfirmation() public OnlyConfirmerOrInitiator {
+    function ClearConfirmation() public OnlyAuthorized {
         Amount = 0;
         TargetAddress = address(0);
         sigCounter = 0;
