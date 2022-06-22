@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import "./MultiSigEvents.sol";
 
+/// @title contains all modifiers and stores variables.
 contract MultySigModifiers is MultiSigEvents {
     address public TokenAddress; //will change only in constractor
     mapping(address => bool) AuthorizedMap; //can self change
