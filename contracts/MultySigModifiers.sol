@@ -10,26 +10,10 @@ contract MultySigModifiers is MultiSigEvents {
     uint256 public Amount; //hold temp data for transaction
     address public TargetAddress; //hold temp data for transaction
 
-    modifier OnlyInitiator() {
+    modifier OnlyAuthorized() {
         require(
-            msg.sender == InitiatorAddress,
-            "only the InitiationAddress can change it"
-        );
-        _;
-    }
-
-    modifier OnlyConfirmerOrInitiator() {
-        require(
-            msg.sender == InitiatorAddress || msg.sender == ConfirmerAddress,
-            "only the InitiationAddress or ConfirmerAddress can change it"
-        );
-        _;
-    }
-
-    modifier OnlyConfirmer() {
-        require(
-            msg.sender == ConfirmerAddress,
-            "only the ConfirmerAddress can change it"
+            isAuthorized(msg.sender), // need to rename this
+            "User is not Authorized"
         );
         _;
     }
