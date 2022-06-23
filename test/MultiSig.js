@@ -49,6 +49,15 @@ contract("MultiSig", (accounts) => {
     assert.equal(initiateAmount, amount);
   });
 
+  it("should revert double vote", async () => {
+    await truffleAssert.reverts(
+      multiSig.ConfirmMint(mintAddr, amount, {
+        from: initiatorAddress,
+      }),
+      "your vote is already accepted"
+    );
+  });
+
   it("should confirm mint", async () => {
     const totalSupply = new BigNumber(await token.totalSupply());
     const target = await multiSig.TargetAddress();
