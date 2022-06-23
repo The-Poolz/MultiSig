@@ -41,7 +41,7 @@ contract MultiSigInitiator is MultiSigModifiers {
 
     function _newSignature() internal {
         for (uint256 i = 0; i < sigCounter; i++) {
-            require(VotesMap[i] == msg.sender, "your vote is already accepted");
+            require(VotesMap[i] != msg.sender, "your vote is already accepted");
         }
         sigCounter++;
         VotesMap[sigCounter] = msg.sender;

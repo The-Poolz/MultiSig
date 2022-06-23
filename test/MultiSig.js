@@ -28,15 +28,6 @@ contract("MultiSig", (accounts) => {
     await token.renounceMinter();
   });
 
-<<<<<<< HEAD
-    it('should initiate minting', async () => {
-        const tx = await multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress })
-        const target = tx.logs[0].args.target
-        const initiateAmount = tx.logs[0].args.amount
-        assert.equal(target, mintAddr)
-        assert.equal(initiateAmount, amount)
-    })
-=======
   it("should fail on constractor", async () => {
     await truffleAssert.reverts(
       MultiSig.new(authorizedAddresses, token.address, 20),
@@ -47,7 +38,6 @@ contract("MultiSig", (accounts) => {
       "Token address must be non-zero"
     );
   });
->>>>>>> master
 
   it("should initiate minting", async () => {
     const tx = await multiSig.InitiateMint(mintAddr, amount, {
