@@ -45,7 +45,7 @@ Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x27e549b383d54042be1b008265f
 ```console
     event StartMint(address target, uint256 amount);
 ```
-Testnet tx: [link](https://testnet.bscscan.com/tx/0x298d3484e9532ecddabf3d2d578f5a138d2c53e2585bec96bf89c7ec6192d159)
+Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x661a785f3b1c9d0c488470c0c636a61f8764b423ceb14aa8cfc52799532b8d9c)
 
 3. After that you have to confirm action from amount of confirmer's address, which pointed in MinSigners variable.
    You can do this by using ConfirmMint() function.
