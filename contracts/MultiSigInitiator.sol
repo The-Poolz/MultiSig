@@ -58,6 +58,9 @@ contract MultiSigInitiator is MultiSigModifiers {
         Amount = 0;
         TargetAddress = address(0);
         sigCounter = 0;
+        for (uint256 i = 0; i < sigCounter; i++) {
+            VotesMap[i] = address(0);
+        }
         emit Clear();
     }
 
