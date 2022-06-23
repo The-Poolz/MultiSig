@@ -7,6 +7,7 @@ import "./MultiSigEvents.sol";
 contract MultiSigModifiers is MultiSigEvents {
     address public TokenAddress; //will change only in constractor
     uint256 public MinSigners; //min signers amount to do action - will change only in constractor
+    uint256 public sigCounter; //vote count if the transaction can be implemented
     mapping(address => bool) public AuthorizedMap; //can self change
     uint256 public Amount; //hold temp data for transaction
     address public TargetAddress; //hold temp data for transaction
