@@ -33,16 +33,16 @@ truffle migrate --network dashboard
 
 2. The second you have to start a vote by using InitiateMint() function.
    Where you have to pass target address and amount of tokens. 
-   During the sending of transaction it will be emitted a StartMint event.
-```console
-    event StartMint(address target, uint256 amount);
-```
 ```console
     function InitiateMint(address target, uint256 amount)
         external
         OnlyAuthorized
         ValuesCheck(address(0), 0)
     {
+```
+   During the sending of transaction it will be emitted a StartMint event.
+```console
+    event StartMint(address target, uint256 amount);
 ```
 
 3. After that you have to confirm action from each confirmer's address, which pointed in authorized addresses.
