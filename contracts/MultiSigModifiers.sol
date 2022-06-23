@@ -28,4 +28,11 @@ contract MultiSigModifiers is MultiSigEvents {
         );
         _;
     }
+
+    modifier NotVoted(){
+        for (uint256 i = 0; i < sigCounter; i++) {
+            require(VotesMap[i] != msg.sender, "your vote is already accepted");
+        }
+        _;
+    }
 }

@@ -39,10 +39,7 @@ contract MultiSigInitiator is MultiSigModifiers {
         return sigCounter == MinSigners;
     }
 
-    function _newSignature() internal {
-        for (uint256 i = 0; i < sigCounter; i++) {
-            require(VotesMap[i] != msg.sender, "your vote is already accepted");
-        }
+    function _newSignature() NotVoted internal {
         VotesMap[sigCounter++] = msg.sender;
         emit NewSig(msg.sender, sigCounter, MinSigners);
     }
@@ -56,9 +53,6 @@ contract MultiSigInitiator is MultiSigModifiers {
     function ClearConfirmation() public OnlyAuthorized {
         Amount = 0;
         TargetAddress = address(0);
-        for (uint256 i = 0; i < sigCounter; i++) {
-            VotesMap[i] = address(0);
-        }
         sigCounter = 0;
         emit Clear();
     }
