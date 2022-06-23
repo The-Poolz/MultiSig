@@ -30,7 +30,7 @@ truffle migrate --network dashboard
         _addMinter(account);
   }
 ```
-Testnet tx: [link](https://testnet.bscscan.com/tx/0xf6cfd8624de13f07478de5189dae7e5695d563f5af2d948a301902b89707c35b)
+Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x27e549b383d54042be1b008265fc09dd101a2b1b9e172270182446595f40fc99)
 
 2. The second you have to start a vote by using InitiateMint() function.
    Where you have to pass target address and amount of tokens. 
