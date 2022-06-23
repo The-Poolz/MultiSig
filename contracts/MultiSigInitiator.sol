@@ -31,7 +31,7 @@ contract MultiSigInitiator is MultiSigModifiers {
         require(target != address(0), "Target address must be non-zero");
         TargetAddress = target;
         emit StartChangeOwner(target);
-        _confirmTransferOwnership(target);
+        _confirmTransferOwnership(target);     
     }
 
     /// @return true if there are enough votes to complete the transaction
