@@ -39,8 +39,8 @@ contract MultiSigInitiator is MultiSigModifiers {
         return sigCounter == MinSigners;
     }
 
-    function _newSignature() internal {
-        sigCounter++;
+    function _newSignature() NotVoted internal {
+        VotesMap[sigCounter++] = msg.sender;
         emit NewSig(msg.sender, sigCounter, MinSigners);
     }
 

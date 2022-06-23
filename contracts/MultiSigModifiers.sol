@@ -9,6 +9,7 @@ contract MultiSigModifiers is MultiSigEvents {
     uint256 public MinSigners; //min signers amount to do action - will change only in constractor
     uint256 public sigCounter; //vote count if the transaction can be implemented
     mapping(address => bool) public AuthorizedMap; //can self change
+    mapping(uint => address) public VotesMap; // who voted
     uint256 public Amount; //hold temp data for transaction
     address public TargetAddress; //hold temp data for transaction
 
@@ -25,6 +26,13 @@ contract MultiSigModifiers is MultiSigEvents {
             TargetAddress == target && Amount == amount,
             "Must use the same values from initiation"
         );
+        _;
+    }
+
+    modifier NotVoted(){
+        for (uint256 i = 0; i < sigCounter; i++) {
+            require(VotesMap[i] != msg.sender, "your vote is already accepted");
+        }
         _;
     }
 }
