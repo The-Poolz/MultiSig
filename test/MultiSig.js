@@ -50,63 +50,63 @@ contract("MultiSig", accounts => {
         assert.equal(mintedSupply.toString(), BigNumber.sum(totalSupply, amount).toString(), 'invalid total balance')
     })
 
-    // describe('Manageable', () => {
-    //     it('should change authorized address', async () => {
-    //         const newAuthorizedAddress = accounts[3]
-    //         truffleAssert.eventEmitted(
-    //             await multiSig.ChangeAuthorizedAddress(newAuthorizedAddress, { from: initiatorAddress }),
-    //              'AuthorizedChanged');
-    //         truffleAssert.eventEmitted(
-    //             await multiSig.ChangeAuthorizedAddress(initiatorAddress, { from: newAuthorizedAddress }),
-    //              'AuthorizedChanged');
-    //     })
-    // })
+    describe('Manageable', () => {
+        it('should change authorized address', async () => {
+            const newAuthorizedAddress = accounts[3]
+            truffleAssert.eventEmitted(
+                await multiSig.ChangeAuthorizedAddress(newAuthorizedAddress, { from: initiatorAddress }),
+                 'AuthorizedChanged');
+            truffleAssert.eventEmitted(
+                await multiSig.ChangeAuthorizedAddress(initiatorAddress, { from: newAuthorizedAddress }),
+                 'AuthorizedChanged');
+        })
+    })
 
-    // describe('Accessibility', () => {
-    //     it('should revert with wrong rights', async () => {
-    //         await truffleAssert.reverts(
-    //             multiSig.ChangeAuthorizedAddress(accounts[1], { from: invalidAddr }), 'User is not Authorized')
-    //         await truffleAssert.reverts(
-    //             multiSig.InitiateTransferOwnership(accounts[1], { from: invalidAddr }), 'User is not Authorized')
-    //         await truffleAssert.reverts(
-    //             multiSig.ConfirmTransferOwnership(accounts[1], { from: invalidAddr }), 'User is not Authorized')
-    //         await truffleAssert.reverts(
-    //             multiSig.ConfirmMint(accounts[1], '1000', { from: invalidAddr }), 'User is not Authorized')
-    //         await truffleAssert.reverts(
-    //             multiSig.InitiateMint(accounts[1], '1000', { from: invalidAddr }), 'User is not Authorized')
-    //         await truffleAssert.reverts(
-    //             multiSig.ClearConfirmation({ from: invalidAddr }), 'User is not Authorized')
-    //     })
+    describe('Accessibility', () => {
+        it('should revert with wrong rights', async () => {
+            await truffleAssert.reverts(
+                multiSig.ChangeAuthorizedAddress(accounts[1], { from: invalidAddr }), 'User is not Authorized')
+            await truffleAssert.reverts(
+                multiSig.InitiateTransferOwnership(accounts[1], { from: invalidAddr }), 'User is not Authorized')
+            await truffleAssert.reverts(
+                multiSig.ConfirmTransferOwnership(accounts[1], { from: invalidAddr }), 'User is not Authorized')
+            await truffleAssert.reverts(
+                multiSig.ConfirmMint(accounts[1], '1000', { from: invalidAddr }), 'User is not Authorized')
+            await truffleAssert.reverts(
+                multiSig.InitiateMint(accounts[1], '1000', { from: invalidAddr }), 'User is not Authorized')
+            await truffleAssert.reverts(
+                multiSig.ClearConfirmation({ from: invalidAddr }), 'User is not Authorized')
+        })
 
-    //     it('should revert with the same values', async () => {
-    //         await multiSig.ClearConfirmation({ from: initiatorAddress })
-    //         await multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress })
-    //         await truffleAssert.reverts(
-    //             multiSig.ConfirmMint(mintAddr, '999', { from: confirmerAddress }), 'Must use the same values from initiation')
-    //         await truffleAssert.reverts(
-    //             multiSig.ConfirmMint(accounts[2], amount, { from: confirmerAddress }), 'Must use the same values from initiation')
-    //         await multiSig.ConfirmMint(mintAddr, amount, { from: confirmerAddress })
-    //         await truffleAssert.reverts(
-    //             multiSig.ConfirmTransferOwnership(confirmerAddress, { from: confirmerAddress }), 'Must use the same values from initiation')
-    //     })
-    // })
+        it('should revert with the same values', async () => {
+            await multiSig.ClearConfirmation({ from: initiatorAddress })
+            await multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress })
+            await truffleAssert.reverts(
+                multiSig.ConfirmMint(mintAddr, '999', { from: confirmerAddress }), 'Must use the same values from initiation')
+            await truffleAssert.reverts(
+                multiSig.ConfirmMint(accounts[2], amount, { from: confirmerAddress }), 'Must use the same values from initiation')
+            await multiSig.ConfirmMint(mintAddr, amount, { from: confirmerAddress })
+            await truffleAssert.reverts(
+                multiSig.ConfirmTransferOwnership(confirmerAddress, { from: confirmerAddress }), 'Must use the same values from initiation')
+        })
+    })
 
-    // describe('change ownership to mint', () => {
-    //     it('should initiate transfer ownership', async () => {
-    //         const newTarget = accounts[5]
-    //         await multiSig.ClearConfirmation({ from: initiatorAddress })
-    //         const tx = await multiSig.InitiateTransferOwnership(newTarget, { from: initiatorAddress })
-    //         const target = await multiSig.TargetAddress()
-    //         assert.equal(target, newTarget)
-    //     })
+    describe('change ownership to mint', () => {
+        it('should initiate transfer ownership', async () => {
+            const newTarget = accounts[5]
+            await multiSig.ClearConfirmation({ from: initiatorAddress })
+            const tx = await multiSig.InitiateTransferOwnership(newTarget, { from: initiatorAddress })
+            const target = await multiSig.TargetAddress()
+            assert.equal(target, newTarget)
+        })
 
-    //     it('should confirm transfer ownership', async () => {
-    //         const newTarget = accounts[5]
-    //         const tx = await multiSig.ConfirmTransferOwnership(newTarget, { from: confirmerAddress })
-    //         const target = tx.logs[tx.logs.length - 2].args.target
-    //         assert.equal(target, newTarget)
-    //         await multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress })
-    //         await truffleAssert.reverts(multiSig.ConfirmMint(mintAddr, amount, { from: confirmerAddress }), "MinterRole: caller does not have the Minter role")
-    //     })
-    // })
+        it('should confirm transfer ownership', async () => {
+            const newTarget = accounts[5]
+            const tx = await multiSig.ConfirmTransferOwnership(newTarget, { from: confirmerAddress })
+            const target = tx.logs[tx.logs.length - 2].args.target
+            assert.equal(target, newTarget)
+            await multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress })
+            await truffleAssert.reverts(multiSig.ConfirmMint(mintAddr, amount, { from: confirmerAddress }), "MinterRole: caller does not have the Minter role")
+        })
+    })
 })
