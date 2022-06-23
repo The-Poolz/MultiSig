@@ -6,6 +6,7 @@ import "./TokenInterface.sol";
 
 /// @title contains confirmation requests.
 contract MultiSigConfirmer is MultiSigInitiator {
+    uint256 public sigCounter; // if sigCounter == MinSigners transaction can be implemented
 
     /// @dev only authorized address can change himself
     function ChangeAuthorizedAddress(address authorize) external OnlyAuthorized {
@@ -25,8 +26,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
     {
         _newSignature();
         if (IsFinalSig()) {
-            IERC20(TokenAddress).mint(target, amount);
-            emit CompleteMint(target, amount);
+            _mint(target, amount);
             ClearConfirmation();
         }
     }
@@ -44,18 +44,5 @@ contract MultiSigConfirmer is MultiSigInitiator {
             emit CompleteChangeOwner(target);
             ClearConfirmation();
         }
-    }
-
-    /// @return true if there are enough votes to complete the transaction
-    function IsFinalSig() internal view returns (bool) {
-        return sigCounter == MinSigners;
-    }
-
-    /// @dev cancel the minting request
-    function ClearConfirmation() public OnlyAuthorized {
-        Amount = 0;
-        TargetAddress = address(0);
-        sigCounter = 0;
-        emit Clear();
     }
 }
