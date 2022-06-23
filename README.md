@@ -47,7 +47,7 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0xf6cfd8624de13f07478de5189dae
 ```
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x298d3484e9532ecddabf3d2d578f5a138d2c53e2585bec96bf89c7ec6192d159)
 
-3. After that you have to confirm action from each confirmer's address, which pointed in authorized addresses.
+3. After that you have to confirm action from amount of confirmer's address, which pointed in MinSigners variable.
    You can do this by using ConfirmMint() function.
    If there are enough votes, coins will be minted.
 ```console
