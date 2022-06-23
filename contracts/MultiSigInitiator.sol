@@ -5,14 +5,17 @@ import "./MultiSigModifiers.sol";
 
 /// @title contains all request initiations.
 contract MultiSigInitiator is MultiSigModifiers {
-
     /// @dev initiate a request to mint tokens
     function InitiateMint(address target, uint256 amount)
         external
         OnlyAuthorized
         ValuesCheck(address(0), 0)
     {
-        require(amount > 0 && target != address(0), "Target address must be non-zero and amount must be greater than 0");
+        require(
+            amount > 0 && target != address(0),
+            "Target address must be non-zero and amount must be greater than 0"
+        );
+        _newSignature();
         Amount = amount;
         TargetAddress = target;
         emit StartMint(target, amount);
@@ -25,7 +28,13 @@ contract MultiSigInitiator is MultiSigModifiers {
         ValuesCheck(address(0), 0)
     {
         require(target != address(0), "Target address must be non-zero");
+        _newSignature();
         TargetAddress = target;
         emit StartChangeOwner(target);
+    }
+
+    function _newSignature() internal {
+        sigCounter++;
+        emit NewSig(msg.sender, sigCounter, MinSigners);
     }
 }
