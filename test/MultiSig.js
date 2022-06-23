@@ -29,8 +29,8 @@ contract("MultiSig", accounts => {
 
     it('should initiate minting', async () => {
         const tx = await multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress })
-        const target = tx.logs[tx.logs.length - 1].args.target
-        const initiateAmount = tx.logs[tx.logs.length - 1].args.amount
+        const target = tx.logs[0].args.target
+        const initiateAmount = tx.logs[0].args.amount
         assert.equal(target, mintAddr)
         assert.equal(initiateAmount, amount)
     })
