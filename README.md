@@ -50,3 +50,10 @@ Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x4b536a63f2aad04f829274731b8
     function ConfirmMint(address target, uint256 amount) external;
 ```
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x785c017d46639a662a55f40abf3d2fda1827f0c7ddb0341e78d98e17c80106c3)
+
+
+4. If you want to revert the initiating of minting by using ClearConfirmation() function.
+```solidity
+    function ClearConfirmation() public OnlyAuthorized;
+```
+Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xaa07b87cb97a1d6c24d52fb00b445a6d5d0805aed1d8c6375ef2e6955c92ced3)
