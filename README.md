@@ -52,8 +52,16 @@ Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x4b536a63f2aad04f829274731b8
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x785c017d46639a662a55f40abf3d2fda1827f0c7ddb0341e78d98e17c80106c3)
 
 
-P.S. If you want to revert the initiating of mint you should use ClearConfirmation() function.
+P.S. 
+
+If you want to revert the initiating of mint you should use ClearConfirmation() function.
 ```solidity
-    function ClearConfirmation() public OnlyAuthorized;
+    function ClearConfirmation() public;
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xaa07b87cb97a1d6c24d52fb00b445a6d5d0805aed1d8c6375ef2e6955c92ced3)
+
+If you want to change your authorized address to another you should use ChangeAuthorizedAddress() function.
+```solidity
+    function ChangeAuthorizedAddress(address authorize) external;
+```
+Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x7eeea83ca80c654cf59c9155db2991ce41298cf266d14b90e111ab6b6cbce682)
