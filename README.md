@@ -55,7 +55,7 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0x785c017d46639a662a55f40abf3d
 
 ## FAQs
 
-* Do you need to cancel a transaction request?
+* How can I cancel a transaction request?
 
    You should use the ClearConfirmation() function.
 ```solidity
@@ -63,7 +63,7 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0x785c017d46639a662a55f40abf3d
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xaa07b87cb97a1d6c24d52fb00b445a6d5d0805aed1d8c6375ef2e6955c92ced3)
 
-* Do you need to change your authorized address to another?
+* What should I do if I need to change my authorized address to another?
 
    You should use ChangeAuthorizedAddress() function.
 ```solidity
@@ -71,7 +71,7 @@ Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xaa07b87cb97a1d6c24d52fb00b4
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x7eeea83ca80c654cf59c9155db2991ce41298cf266d14b90e111ab6b6cbce682)
 
-* Do you need to transfer ownership address to another?
+* What should I do if I need to transfer ownership address to another?
 
    You should use InitiateTransferOwnership() function.
 ```solidity
