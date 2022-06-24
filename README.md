@@ -67,8 +67,14 @@ If you want to change your authorized address to another you should use ChangeAu
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x7eeea83ca80c654cf59c9155db2991ce41298cf266d14b90e111ab6b6cbce682)
 
-If you want to transfer your initiating ownership address to another you should use InitiateTransferOwnership() function.
+If you want to transfer initiating ownership address to another you should use InitiateTransferOwnership() function.
 ```solidity
     function InitiateTransferOwnership(address target) external;
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xa07d1b1a4bc5939f1df0b6ed5e9c4ccfcb1ea1159b0155c11e8ccc388e5cd623)
+
+If you want to confirm initiated transfer ownership address to another you should use ConfirmTransferOwnership() function.
+```solidity
+    function ConfirmTransferOwnership(address target) external;
+```
+Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xe6e329608dca88c09163c681a43e4b1f93da0d7ed105f74ef3e40d9b35e3cbd5)
