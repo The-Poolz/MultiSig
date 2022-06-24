@@ -73,7 +73,7 @@ If you want to transfer initiating ownership address to another you should use I
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xa07d1b1a4bc5939f1df0b6ed5e9c4ccfcb1ea1159b0155c11e8ccc388e5cd623)
 
-If you want to confirm initiated transfer ownership address to another you should use ConfirmTransferOwnership() function.
+Could change to: After that, you need to collect the required number of votes. The ConfirmTransferOwnership() function allows members to vote. If the required number of votes is obtained, the rights will be transferred.
 ```solidity
     function ConfirmTransferOwnership(address target) external;
 ```
