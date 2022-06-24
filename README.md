@@ -25,21 +25,15 @@ truffle migrate --network dashboard
 ### How to use?
 1. First of all you have to set the minter in the token contract as the contract address.
    You can use addMinter() function.
-```console
-  function addMinter(address account) public onlyMinter {
-        _addMinter(account);
-  }
+```solidity
+  function addMinter(address account)
 ```
 Testnet tx: [link](https://testnet.bscscan.com/tx/0xf6cfd8624de13f07478de5189dae7e5695d563f5af2d948a301902b89707c35b)
 
 2. The second you have to start a vote by using InitiateMint() function.
    Where you have to pass target address and amount of tokens. 
-```console
+```solidity
     function InitiateMint(address target, uint256 amount)
-        external
-        OnlyAuthorized
-        ValuesCheck(address(0), 0)
-    {
 ```
    During the sending of transaction it will be emitted a StartMint event.
 ```console
@@ -50,11 +44,7 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0x298d3484e9532ecddabf3d2d578f
 3. After that you have to confirm action from amount of confirmer's address, which pointed in MinSigners variable.
    You can do this by using ConfirmMint() function.
    If there are enough votes, coins will be minted.
-```console
+```solidity
     function ConfirmMint(address target, uint256 amount)
-        external
-        OnlyAuthorized
-        ValuesCheck(target, amount)
-    {
 ```
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x785c017d46639a662a55f40abf3d2fda1827f0c7ddb0341e78d98e17c80106c3)
