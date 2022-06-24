@@ -52,7 +52,7 @@ Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x4b536a63f2aad04f829274731b8
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x785c017d46639a662a55f40abf3d2fda1827f0c7ddb0341e78d98e17c80106c3)
 
 
-4. If you want to revert the initiating of minting by using ClearConfirmation() function.
+4. If you want to revert the initiating of mint you should use ClearConfirmation() function.
 ```solidity
     function ClearConfirmation() public OnlyAuthorized;
 ```
