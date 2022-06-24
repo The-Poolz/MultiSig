@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./MultiSigEvents.sol";
-
 /// @title contains all modifiers and stores variables.
-contract MultiSigModifiers is MultiSigEvents {
+contract MultiSigModifiers {
     address public TokenAddress; //will change only in constractor
     uint256 public MinSigners; //min signers amount to do action - will change only in constractor
     uint256 public sigCounter; //vote count if the transaction can be implemented
