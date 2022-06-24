@@ -19,23 +19,22 @@ truffle run coverage
 
 ```console
 truffle dashboard
-```
 ```console
 truffle migrate --network dashboard
 ```
 
 ### How to use?
-1. First of all you have to set the minter in the token contract as the contract address.
-   You can use addMinter() function.
+1. First of all, you should set the MultiSig contract as a minter role using the mintable token contract.
+   You should use the addMinter() function.
 ```solidity
-  function addMinter(address account)
+  function addMinter(address account) public onlyMinter
 ```
 Testnet tx: [link](https://testnet.bscscan.com/tx/0xf6cfd8624de13f07478de5189dae7e5695d563f5af2d948a301902b89707c35b)
 
 2. The second you have to start a vote by using InitiateMint() function.
    Where you have to pass target address and amount of tokens. 
 ```solidity
-    function InitiateMint(address target, uint256 amount)
+    function InitiateMint(address target, uint256 amount) external;
 ```
    During the sending of transaction it will be emitted a StartMint event.
 ```solidity
@@ -47,6 +46,6 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0x298d3484e9532ecddabf3d2d578f
    You can do this by using ConfirmMint() function.
    If there are enough votes, coins will be minted.
 ```solidity
-    function ConfirmMint(address target, uint256 amount)
+    function ConfirmMint(address target, uint256 amount) external;
 ```
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x785c017d46639a662a55f40abf3d2fda1827f0c7ddb0341e78d98e17c80106c3)
