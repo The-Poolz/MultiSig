@@ -26,7 +26,7 @@ truffle migrate --network dashboard
 
 ### How to use?
 1. First of all, you should set the MultiSig contract as a minter role using the mintable token contract.
-   You should use the addMinter() function.
+   <br>You should use the addMinter() function.
 ```solidity
   function addMinter(address account) external;
 ```
