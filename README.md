@@ -36,7 +36,7 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0xf6cfd8624de13f07478de5189dae
     function InitiateMint(address target, uint256 amount)
 ```
    During the sending of transaction it will be emitted a StartMint event.
-```console
+```solidity
     event StartMint(address target, uint256 amount);
 ```
 Testnet tx: [link](https://testnet.bscscan.com/tx/0x298d3484e9532ecddabf3d2d578f5a138d2c53e2585bec96bf89c7ec6192d159)
