@@ -19,6 +19,7 @@ truffle run coverage
 
 ```console
 truffle dashboard
+```
 ```console
 truffle migrate --network dashboard
 ```
