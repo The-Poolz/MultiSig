@@ -53,27 +53,33 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0x785c017d46639a662a55f40abf3d
 
 
 
-## Control functions
+## FAQs
 
-* If you need to cancel a transaction request, you should use the ClearConfirmation() function.
+* How can I cancel a transaction request?
+
+   You should use the ClearConfirmation() function.
 ```solidity
     function ClearConfirmation() public;
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xaa07b87cb97a1d6c24d52fb00b445a6d5d0805aed1d8c6375ef2e6955c92ced3)
 
-* If you want to change your authorized address to another you should use ChangeAuthorizedAddress() function.
+* What should I do if I need to change my authorized address to another?
+
+   You should use ChangeAuthorizedAddress() function.
 ```solidity
     function ChangeAuthorizedAddress(address authorize) external;
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x7eeea83ca80c654cf59c9155db2991ce41298cf266d14b90e111ab6b6cbce682)
 
-* If you want to transfer ownership address to another you should use InitiateTransferOwnership() function.
+* What should I do if I need to transfer ownership address to another?
+
+   You should use InitiateTransferOwnership() function.
 ```solidity
     function InitiateTransferOwnership(address target) external;
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xa07d1b1a4bc5939f1df0b6ed5e9c4ccfcb1ea1159b0155c11e8ccc388e5cd623)
 
-After that, you need to collect the required number of votes. The ConfirmTransferOwnership() function allows members to vote. If the required number of votes is obtained, the rights will be transferred.
+   After that, you need to collect the required number of votes. The ConfirmTransferOwnership() function allows members to vote. If the required number of votes is        obtained, the rights will be transferred.
 ```solidity
     function ConfirmTransferOwnership(address target) external;
 ```
