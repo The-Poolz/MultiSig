@@ -30,7 +30,7 @@ truffle migrate --network dashboard
 ```solidity
   function addMinter(address account) external;
 ```
-Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xb970ba50ec036642759f0dc3152a31b095313aa29a4a35c8ee6e7a071c938ad8)
+Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x69285043b6124a753875e587b43a4b3b3efc6e5926db327e8af77803526a8e46)
 
 **2.** The second you have to start a vote by using InitiateMint() function.
    Where you have to pass target address and amount of tokens. 
@@ -41,7 +41,7 @@ Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xb970ba50ec036642759f0dc3152
 ```solidity
     event StartMint(address target, uint256 amount);
 ```
-Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x4b536a63f2aad04f829274731b81ebb67a118345090deb166c50853b168cfaa8)
+Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xb970ba50ec036642759f0dc3152a31b095313aa29a4a35c8ee6e7a071c938ad8)
 
 **3.** After that you have to confirm action from amount of confirmer's address, which pointed in MinSigners variable.
    You can do this by using ConfirmMint() function.
