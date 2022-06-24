@@ -53,7 +53,7 @@ Testnet tx: [link](https://testnet.bscscan.com/tx/0x785c017d46639a662a55f40abf3d
 
 
 
-P.S. 
+[^2]**P.S.**
 
 If you want to revert the initiating of mint you should use ClearConfirmation() function.
 ```solidity
