@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/The-Poolz/MultiSig/branch/master/graph/badge.svg?token=619oKb6Wsk)](https://codecov.io/gh/The-Poolz/MultiSig)
 [![CodeFactor](https://www.codefactor.io/repository/github/the-poolz/multisig/badge)](https://www.codefactor.io/repository/github/the-poolz/multisig)
 
-Smart contract of using multi signature for approval sending transactions.
+The main idea of the **MultiSig** contract is to delegate the right to mint tokens from one participant to several using a voting system.
 
 ### Installation
 
@@ -33,8 +33,15 @@ truffle migrate --network dashboard
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x69285043b6124a753875e587b43a4b3b3efc6e5926db327e8af77803526a8e46)
 
-**2.** The second you have to start a vote by using InitiateMint() function.
-   Where you have to pass target address and amount of tokens. 
+**2.** Next, you need to renounce the role that gave you unlimited rights to mint tokens. We need this to fully transfer the rights to mint tokens only to the MultiSig contract.
+```solidity
+   // after using this function, your address can no longer mint tokens 
+   function renounceMinter() external;
+```
+
+Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xd1e2db5ad3fb546c37647f1e116645c2fcab5db40d89771a64e11ca10c9fed88)
+
+**3.** Then you need to start voting with the InitiateMint() function. Where you should pass the target address and number of tokens. 
 ```solidity
     function InitiateMint(address target, uint256 amount) external;
 ```
@@ -44,7 +51,7 @@ Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x69285043b6124a753875e587b43
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xb970ba50ec036642759f0dc3152a31b095313aa29a4a35c8ee6e7a071c938ad8)
 
-**3.** After that you have to confirm action from amount of confirmer's address, which pointed in MinSigners variable.
+**4.** After that you have to confirm action from amount of confirmer's address, which pointed in MinSigners variable.
    You can do this by using ConfirmMint() function.
    If there are enough votes, coins will be minted.
 ```solidity
