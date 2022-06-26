@@ -29,21 +29,22 @@ truffle migrate --network dashboard
 **1.** First of all, you should set the MultiSig contract as a minter role using the mintable token contract.
    <br>You should use the addMinter() function.
 ```solidity
-  // where the account address is a multi-signature contract
-  function addMinter(address account) external;
+    // where the account address is a multi-signature contract
+    function addMinter(address account) external;
 ```
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0x69285043b6124a753875e587b43a4b3b3efc6e5926db327e8af77803526a8e46)
 
 **2.** Next, you need to renounce the role that gave you unlimited rights to mint tokens. We need this to fully transfer the rights to mint tokens only to the MultiSig contract.
 ```solidity
    // after using this function, your address can no longer mint tokens 
-   function renounceMinter() external;
+    function renounceMinter() external;
 ```
 
 Testnet tx: [link](https://rinkeby.etherscan.io/tx/0xd1e2db5ad3fb546c37647f1e116645c2fcab5db40d89771a64e11ca10c9fed88)
 
 **3.** Then you need to start voting with the InitiateMint() function. Where you should pass the target address and number of tokens. 
 ```solidity
+    // when you initiate the minting of tokens, your vote is already counted
     function InitiateMint(address target, uint256 amount) external;
 ```
    During the sending of transaction it will be emitted a StartMint event.
