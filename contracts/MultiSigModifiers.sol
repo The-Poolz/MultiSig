@@ -24,7 +24,7 @@ contract MultiSigModifiers {
     modifier onlyMinter() {
         require(
             IERC20(TokenAddress).isMinter(address(this)),
-            "MultiSig does not have a minter role"
+            "MultiSig doesn't have a minter role"
         );
         _;
     }
