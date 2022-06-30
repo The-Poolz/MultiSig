@@ -8,6 +8,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
     /// @dev only authorized address can change himself
     function ChangeAuthorizedAddress(address authorize)
         external
+        whenNotPaused
         OnlyAuthorized
     {
         require(
@@ -24,6 +25,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
     /// if there are enough votes, coins will be minted
     function ConfirmMint(address target, uint256 amount)
         external
+        whenNotPaused
         OnlyAuthorized
         ValuesCheck(target, amount)
     {
@@ -33,6 +35,7 @@ contract MultiSigConfirmer is MultiSigInitiator {
     /// @dev transfers the right to mint tokens
     function ConfirmTransferOwnership(address target)
         external
+        whenNotPaused
         OnlyAuthorized
         ValuesCheck(target, 0)
     {

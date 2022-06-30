@@ -1,16 +1,23 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/lifecycle/Pausable.sol";
+import "poolz-helper-v2/contracts/GovManager.sol";
 import "./MultiSigModifiers.sol";
 import "./TokenInterface.sol";
 import "./MultiSigEvents.sol";
 
 /// @title contains all request initiations.
-contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents  {
+contract MultiSigInitiator is
+    MultiSigModifiers,
+    MultiSigEvents,
+    Pausable
+{
     /// @dev initiate a request to mint tokens
     function InitiateMint(address target, uint256 amount)
         external
         OnlyAuthorized
+        whenNotPaused
         ValuesCheck(address(0), 0)
     {
         require(
@@ -27,12 +34,13 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents  {
     function InitiateTransferOwnership(address target)
         external
         OnlyAuthorized
+        whenNotPaused
         ValuesCheck(address(0), 0)
     {
         require(target != address(0), "Target address must be non-zero");
         TargetAddress = target;
         emit StartChangeOwner(target);
-        _confirmTransferOwnership(target);     
+        _confirmTransferOwnership(target);
     }
 
     /// @return true if there are enough votes to complete the transaction
@@ -40,7 +48,7 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents  {
         return sigCounter == MinSigners;
     }
 
-    function _newSignature() NotVoted internal {
+    function _newSignature() internal NotVoted {
         VotesMap[sigCounter++] = msg.sender;
         emit NewSig(msg.sender, sigCounter, MinSigners);
     }
@@ -51,7 +59,7 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents  {
     }
 
     /// @dev cancel the minting request
-    function ClearConfirmation() public OnlyAuthorized {
+    function ClearConfirmation() public OnlyAuthorized whenNotPaused {
         Amount = 0;
         TargetAddress = address(0);
         sigCounter = 0;
@@ -74,5 +82,13 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents  {
             emit CompleteChangeOwner(target);
             ClearConfirmation();
         }
+    }
+
+    function Pause() external  {
+        _pause();
+    }
+
+    function Unpause() external  {
+        _unpause();
     }
 }
