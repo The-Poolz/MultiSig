@@ -21,7 +21,7 @@ truffle run coverage
 truffle dashboard
 ```
 ```console
-truffle migrate --network dashboard
+truffle migrate --f 1 --to  --network dashboard 
 ```
 
 ### How to use?
