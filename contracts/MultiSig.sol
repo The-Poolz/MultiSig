@@ -16,7 +16,9 @@ contract MultiSig is MultiSigConfirmer {
     ) {
         require(Authorized.length >= MinSignersAmount, "Authorized array length must be equal or greater than MinSignersAmount");
         require(Token != address(0), "Token address must be non-zero");
+        require(MinSignersAmount > 1, "Minimum signers must be greater than 1");
         for (uint256 index = 0; index < Authorized.length; index++) {
+            require(Authorized[index] != address(0), "Invalid Authorized address");
             AuthorizedMap[Authorized[index]] = true;
         }
         TokenAddress = Token;

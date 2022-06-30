@@ -20,8 +20,6 @@ contract("MultiSig", (accounts) => {
   before(async () => {
     token = await Token.new();
     multiSig = await MultiSig.new(authorizedAddresses, token.address, 2);
-    const multiToken = await multiSig.TokenAddress();
-
     const minSigners = await multiSig.MinSigners();
     assert.equal(minSigners, 2);
     await token.addMinter(multiSig.address); // multiSig added as minter
@@ -36,6 +34,15 @@ contract("MultiSig", (accounts) => {
     await truffleAssert.reverts(
       MultiSig.new(authorizedAddresses, ZERO_ADDRESS, 2),
       "Token address must be non-zero"
+    );
+    await truffleAssert.reverts(
+      MultiSig.new(authorizedAddresses, token.address, 1),
+      "Minimum signers must be greater than 1"
+    );
+    const invalidAddresses = [accounts[1], ZERO_ADDRESS, accounts[7]];
+    await truffleAssert.reverts(
+      MultiSig.new(invalidAddresses, token.address, 2),
+      "Invalid Authorized address"
     );
   });
 
@@ -202,10 +209,9 @@ contract("MultiSig", (accounts) => {
       });
       const target = tx.logs[tx.logs.length - 2].args.target;
       assert.equal(target, newTarget);
-      await multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress });
       await truffleAssert.reverts(
-        multiSig.ConfirmMint(mintAddr, amount, { from: confirmerAddress }),
-        "MinterRole: caller does not have the Minter role"
+        multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress }),
+        "MultiSig doesn't have a minter role"
       );
     });
   });

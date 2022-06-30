@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "./TokenInterface.sol";
+
 /// @title contains all modifiers and stores variables.
 contract MultiSigModifiers {
     address public TokenAddress; //will change only in constractor
@@ -15,6 +17,14 @@ contract MultiSigModifiers {
         require(
             AuthorizedMap[msg.sender],
             "User is not Authorized"
+        );
+        _;
+    }
+
+    modifier isThisContractMinter() {
+        require(
+            IERC20(TokenAddress).isMinter(address(this)),
+            "MultiSig doesn't have a minter role"
         );
         _;
     }
