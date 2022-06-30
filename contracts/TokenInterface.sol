@@ -8,6 +8,6 @@ interface IERC20 {
     function addMinter(address account) external;
     /// @notice remove msg.sender address from minter role
     function renounceMinter() external;
-    /// @return true if user has minter role
+    /// @return true if account has minter role
     function isMinter(address account) external view returns (bool);
 }

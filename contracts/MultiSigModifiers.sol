@@ -21,9 +21,12 @@ contract MultiSigModifiers {
         _;
     }
 
-    modifier onlyMinter(){
-    require(IERC20(TokenAddress).isMinter(address(this)), "Not minter");
-    _;
+    modifier onlyMinter() {
+        require(
+            IERC20(TokenAddress).isMinter(address(this)),
+            "MultiSig doesn't have a minter roller"
+        );
+        _;
     }
 
     modifier ValuesCheck(address target, uint256 amount) {
