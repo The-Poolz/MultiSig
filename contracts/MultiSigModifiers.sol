@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "./TokenInterface.sol";
+
 /// @title contains all modifiers and stores variables.
 contract MultiSigModifiers {
     address public TokenAddress; //will change only in constractor
@@ -17,6 +19,11 @@ contract MultiSigModifiers {
             "User is not Authorized"
         );
         _;
+    }
+
+    modifier onlyMinter(){
+    require(IERC20(TokenAddress).isMinter(address(this)), "Not minter");
+    _;
     }
 
     modifier ValuesCheck(address target, uint256 amount) {

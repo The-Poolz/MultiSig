@@ -202,10 +202,9 @@ contract("MultiSig", (accounts) => {
       });
       const target = tx.logs[tx.logs.length - 2].args.target;
       assert.equal(target, newTarget);
-      await multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress });
       await truffleAssert.reverts(
-        multiSig.ConfirmMint(mintAddr, amount, { from: confirmerAddress }),
-        "MinterRole: caller does not have the Minter role"
+        multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress }),
+        "Not minter"
       );
     });
   });

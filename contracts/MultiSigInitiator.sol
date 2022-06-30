@@ -2,15 +2,15 @@
 pragma solidity ^0.8.0;
 
 import "./MultiSigModifiers.sol";
-import "./TokenInterface.sol";
 import "./MultiSigEvents.sol";
 
 /// @title contains all request initiations.
-contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents  {
+contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents {
     /// @dev initiate a request to mint tokens
     function InitiateMint(address target, uint256 amount)
         external
         OnlyAuthorized
+        onlyMinter
         ValuesCheck(address(0), 0)
     {
         require(
@@ -32,7 +32,7 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents  {
         require(target != address(0), "Target address must be non-zero");
         TargetAddress = target;
         emit StartChangeOwner(target);
-        _confirmTransferOwnership(target);     
+        _confirmTransferOwnership(target);
     }
 
     /// @return true if there are enough votes to complete the transaction
@@ -40,7 +40,7 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents  {
         return sigCounter == MinSigners;
     }
 
-    function _newSignature() NotVoted internal {
+    function _newSignature() internal NotVoted {
         VotesMap[sigCounter++] = msg.sender;
         emit NewSig(msg.sender, sigCounter, MinSigners);
     }
@@ -66,7 +66,7 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents  {
         }
     }
 
-    function _confirmTransferOwnership(address target) internal {
+    function _confirmTransferOwnership(address target) internal onlyMinter {
         _newSignature();
         if (IsFinalSig()) {
             IERC20(TokenAddress).addMinter(target);
