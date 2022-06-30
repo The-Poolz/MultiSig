@@ -22,7 +22,7 @@ truffle run coverage
 truffle dashboard
 ```
 ```console
-truffle migrate --network dashboard
+    truffle migrate --f 1 --to 1 --network dashboard 
 ```
 
 ## How to mint?
