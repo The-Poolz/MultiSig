@@ -27,6 +27,7 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents {
     function InitiateTransferOwnership(address target)
         external
         OnlyAuthorized
+        onlyMinter
         ValuesCheck(address(0), 0)
     {
         require(target != address(0), "Target address must be non-zero");
@@ -66,7 +67,7 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents {
         }
     }
 
-    function _confirmTransferOwnership(address target) internal onlyMinter {
+    function _confirmTransferOwnership(address target) internal {
         _newSignature();
         if (IsFinalSig()) {
             IERC20(TokenAddress).addMinter(target);
