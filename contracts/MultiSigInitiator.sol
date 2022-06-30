@@ -10,7 +10,7 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents {
     function InitiateMint(address target, uint256 amount)
         external
         OnlyAuthorized
-        isThisMinter
+        isThisContractMinter
         ValuesCheck(address(0), 0)
     {
         require(
@@ -27,7 +27,7 @@ contract MultiSigInitiator is MultiSigModifiers, MultiSigEvents {
     function InitiateTransferOwnership(address target)
         external
         OnlyAuthorized
-        isThisMinter
+        isThisContractMinter
         ValuesCheck(address(0), 0)
     {
         require(target != address(0), "Target address must be non-zero");
