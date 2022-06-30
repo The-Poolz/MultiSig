@@ -204,7 +204,7 @@ contract("MultiSig", (accounts) => {
       assert.equal(target, newTarget);
       await truffleAssert.reverts(
         multiSig.InitiateMint(mintAddr, amount, { from: initiatorAddress }),
-        "MultiSig doesn't have a minter roller"
+        "MultiSig does not have a minter role"
       );
     });
   });
