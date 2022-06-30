@@ -23,5 +23,6 @@ contract MultiSig is MultiSigConfirmer {
         }
         TokenAddress = Token;
         MinSigners = MinSignersAmount;
+        emit Setup(Authorized, Token, MinSignersAmount);
     }
 }
